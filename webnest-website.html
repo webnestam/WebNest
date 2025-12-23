@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WebNest - Professional website development for small businesses in Northern Virginia. Modern, mobile-first websites that drive results.">
+    <meta name="keywords" content="web development, small business websites, Northern Virginia, ReactJS, full stack development">
+    <title>WebNest | Professional Website Development for Small Businesses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #a78bfa;
+            --secondary: #0f172a;
+            --accent: #6366f1;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        /* Hero Section - Clean Light Purple Gradient */
+        .hero {
+            margin-top: 70px;
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #ddd6fe 100%);
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 10s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.1rem 2.8rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--secondary);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.15rem;
+            margin-bottom: 4rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.9rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.2rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .about-image-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .about-image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .about-image-container img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-image-placeholder {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Pricing Section */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            position: relative;
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+        }
+
+        .price-sub {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: all 0.2s ease;
+        }
+
+        .features-list li:hover {
+            padding-left: 5px;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .features-list li.unavailable:before {
+            content: "✗";
+            color: var(--text-light);
+        }
+
+        .features-list li.unavailable {
+            color: var(--text-light);
+        }
+
+        /* Add-ons Section */
+        .addons-section {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            padding: 5rem 2rem;
+        }
+
+        .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .addon-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .addon-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            border-color: var(--primary-light);
+        }
+
+        .addon-icon {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .addon-card:hover .addon-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .addon-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .addon-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 1rem;
+        }
+
+        .addon-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .addon-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .addon-features li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+
+        .addon-features li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.3rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            overflow-x: auto;
+            margin: 3rem 0;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: var(--bg-light);
+        }
+
+        .check {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .cross {
+            color: var(--text-light);
+            font-size: 1.4rem;
+        }
+
+        /* Demo Sites */
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .demo-image {
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .demo-card:hover .demo-image img {
+            transform: scale(1.05);
+        }
+
+        .demo-content {
+            padding: 1.8rem;
+        }
+
+        .demo-content h3 {
+            margin-bottom: 0.7rem;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .demo-content p {
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .demo-link:hover {
+            color: var(--primary-dark);
+            gap: 0.8rem;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            padding: 1.8rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.7rem;
+            font-size: 1.15rem;
+        }
+
+        .faq-answer {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .faq-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-top: 3rem;
+            border: 2px solid var(--border);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 700px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
+
+            .hero {
+                min-height: 550px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image-container img,
+            .about-image-placeholder {
+                height: 320px;
+            }
+
+            .pricing-container {
+                grid-template-columns: 1fr;
+            }
+
+            .addons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-image {
+                height: 200px;
+            }
+
+            section {
+                padding: 3.5rem 1.5rem;
+            }
+
+            .contact-form, .faq-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .stats-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .addons-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .stat-label {
+                font-size: 1rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 480px;
+                padding: 3rem 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.9rem;
+            }
+
+            .price {
+                font-size: 2.3rem;
+            }
+
+            .pricing-card, .addon-card {
+                padding: 1.8rem;
+            }
+
+            .cta-button {
+                padding: 1rem 2.2rem;
+                font-size: 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            section {
+                padding: 2.5rem 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">WebNest</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#addons">Add-ons</a></li>
+                <li><a href="#demos">Portfolio</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Professional Websites for <span>Small Businesses</span></h1>
+            <p>Modern, mobile-first websites that help your business grow. Built with care, delivered with excellence.</p>
+            <a href="#contact" class="cta-button">Request a Free Audit</a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">2-4</div>
+                <div class="stat-label">Week Delivery</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Mobile Optimized</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Support Available</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Updates (Maintain Plan)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="animate-on-scroll">About WebNest</h2>
+        <p class="section-subtitle animate-on-scroll">Personalized web development that puts your business first</p>
+        <div class="about-content">
+            <div class="about-text animate-on-scroll">
+                <h3>Hi, I'm Amrik Majumdar</h3>
+                <p>I'm a full-stack developer based in Northern Virginia, specializing in creating professional websites for small businesses. Unlike generic website builders, I provide personalized service, custom solutions, and ongoing support to ensure your online presence truly represents your brand.</p>
+                <p>With experience in both front-end and back-end development, I build websites that are not only beautiful but also fast, secure, and optimized for conversions. Every project receives the same level of attention and craftsmanship, whether it's a simple landing page or a complex web application.</p>
+                <p>My approach focuses on understanding your unique business needs and creating solutions that drive real results. From the initial consultation to launch and beyond, I'm with you every step of the way.</p>
+                <div class="skills-list">
+                    <span class="skill-tag">ReactJS</span>
+                    <span class="skill-tag">Full Stack</span>
+                    <span class="skill-tag">API Integration</span>
+                    <span class="skill-tag">Mobile-First Design</span>
+                    <span class="skill-tag">Responsive UI/UX</span>
+                    <span class="skill-tag">Performance Optimization</span>
+                </div>
+            </div>
+            <div class="about-image-container animate-on-scroll">
+                <img src="about-image.jpg" alt="Web Development" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="about-image-placeholder" style="display: none;">
+                    Professional Web Development
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <h2 class="animate-on-scroll">Simple, Transparent Pricing</h2>
+        <p class="section-subtitle animate-on-scroll">Choose the plan that fits your business needs</p>
+        <div class="pricing-container">
+            <div class="pricing-card animate-on-scroll">
+                <h3>One-Time Build</h3>
+                <div class="price">$1,000<span class="price-sub"> one-time</span></div>
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">Perfect for businesses that want a professional website with no ongoing commitment.</p>
+                <ul class="features-list">
+                    <li>Full website development</li>
+                    <li>Mobile-first responsive design</li>
+                    <li>SEO optimization</li>
+                    <li>Fast loading performance</li>
+                    <li>Initial content setup</li>
+                    <li>Source code ownership</li>
+                    <li class="unavailable">Ongoing updates</li>
+                    <li class="unavailable">Real-time support</li>
+                    <li class="unavailable">Security monitoring</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; display: block;">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured animate-on-scroll">
+                <span class="featured-badge">Most Popular</span>
+                <h3>Build + Maintain</h3>
+                <div class="price">$700<span class="price-sub"> + $300/month</span></div>
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">For businesses that want continuous optimization and dedicated support.</p>
+                <ul class="features-list">
+                    <li>Full website development</li>
+                    <li>Mobile-first responsive design</li>
+                    <li>SEO optimization</li>
+                    <li>Fast loading performance</li>
+                    <li>Initial content setup</li>
+                    <li>Source code ownership</li>
+                    <li>Unlimited updates & edits</li>
+                    <li>Priority real-time support</li>
+                    <li>Full security monitoring</li>
+                    <li>Performance optimization</li>
+                    <li>Content strategy assistance</li>
+                </ul>
+                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; display: block;">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add-ons Section -->
+    <section id="addons" class="addons-section">
+        <h2 class="animate-on-scroll">Premium Add-Ons & Services</h2>
+        <p class="section-subtitle animate-on-scroll">Enhance your website with powerful features and integrations</p>
+        <div class="addons-grid">
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">🌐</div>
+                <h3>Custom Domain Setup</h3>
+                <div class="addon-price">Starting at $15/year</div>
+                <p>Get a professional custom domain that matches your business name. Includes full DNS configuration and email setup guidance.</p>
+                <ul class="addon-features">
+                    <li>Domain registration assistance</li>
+                    <li>DNS configuration</li>
+                    <li>SSL certificate setup</li>
+                    <li>Professional email guidance</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">📧</div>
+                <h3>Email Integration</h3>
+                <div class="addon-price">$50 setup + service costs</div>
+                <p>Professional email marketing integration with platforms like Mailchimp, ConvertKit, or custom solutions.</p>
+                <ul class="addon-features">
+                    <li>Newsletter signup forms</li>
+                    <li>Automated email sequences</li>
+                    <li>Contact list management</li>
+                    <li>Analytics integration</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">🛒</div>
+                <h3>E-Commerce Features</h3>
+                <div class="addon-price">$200</div>
+                <p>Add shopping cart functionality, payment processing, and inventory management to sell products or services online.</p>
+                <ul class="addon-features">
+                    <li>Product catalog</li>
+                    <li>Secure payment gateway</li>
+                    <li>Shopping cart system</li>
+                    <li>Order management</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">📅</div>
+                <h3>Booking System</h3>
+                <div class="addon-price">$150</div>
+                <p>Let customers schedule appointments, reserve tables, or book services directly through your website.</p>
+                <ul class="addon-features">
+                    <li>Calendar integration</li>
+                    <li>Automated confirmations</li>
+                    <li>Payment collection</li>
+                    <li>Reminder notifications</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">📊</div>
+                <h3>Analytics Dashboard</h3>
+                <div class="addon-price">$150 setup</div>
+                <p>Track visitor behavior, monitor performance, and gain insights with Google Analytics and custom reporting.</p>
+                <ul class="addon-features">
+                    <li>Google Analytics setup</li>
+                    <li>Conversion tracking</li>
+                    <li>Custom reports</li>
+                    <li>Performance monitoring</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">🎨</div>
+                <h3>Additional Pages</h3>
+                <div class="addon-price">$100-$200 per page</div>
+                <p>Expand your website with additional custom pages like blogs, galleries, team pages, or specialized landing pages.</p>
+                <ul class="addon-features">
+                    <li>Custom page design</li>
+                    <li>Content integration</li>
+                    <li>SEO optimization</li>
+                    <li>Mobile responsive</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">🔗</div>
+                <h3>API Integrations</h3>
+                <div class="addon-price">$150</div>
+                <p>Connect your website to third-party services like CRMs, payment processors, social media, or custom APIs.</p>
+                <ul class="addon-features">
+                    <li>CRM integration</li>
+                    <li>Social media feeds</li>
+                    <li>Payment gateways</li>
+                    <li>Custom API connections</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">🎥</div>
+                <h3>Media & Content</h3>
+                <div class="addon-price">$150-$300</div>
+                <p>Professional photo galleries, video integration, blog setup, and content management system implementation.</p>
+                <ul class="addon-features">
+                    <li>Photo gallery systems</li>
+                    <li>Video embedding</li>
+                    <li>Blog platform setup</li>
+                    <li>Content management</li>
+                </ul>
+            </div>
+
+            <div class="addon-card animate-on-scroll">
+                <div class="addon-icon">🔒</div>
+                <h3>Premium Security</h3>
+                <div class="addon-price">$150 setup + $50/month</div>
+                <p>Enhanced security features including advanced SSL, DDoS protection, regular security audits, and backup services.</p>
+                <ul class="addon-features">
+                    <li>Advanced SSL certificates</li>
+                    <li>DDoS protection</li>
+                    <li>Daily backups</li>
+                    <li>Security monitoring</li>
+                </ul>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 3rem; color: var(--text); font-size: 1.1rem;">
+            <strong>Need something custom?</strong> Let's discuss your specific requirements and create a tailored solution for your business.
+        </p>
+        <p style="text-align: center; margin-top: 1rem; color: var(--text-light); font-size: 0.95rem;">
+            Prices may vary based on project complexity.
+        </p>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison">
+        <h2 class="animate-on-scroll">Why Choose WebNest?</h2>
+        <p class="section-subtitle animate-on-scroll">Personalized service vs. generic website builders</p>
+        <div class="comparison-table animate-on-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>WebNest</th>
+                        <th>Website Builders</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Personalized Service</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile-First Design</td>
+                        <td class="check">✓</td>
+                        <td class="check">✓</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Code & Features</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Fast Loading Speed</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Rapid Updates (Maintain Plan)</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Single-Purpose Focus</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Direct Communication</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>No Template Limitations</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                    <tr>
+                        <td>Full Code Ownership</td>
+                        <td class="check">✓</td>
+                        <td class="cross">✗</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Demo Sites Section -->
+    <section id="demos">
+        <h2 class="animate-on-scroll">Portfolio</h2>
+        <p class="section-subtitle animate-on-scroll">See what I've built for real organizations</p>
+        <div class="demos-grid">
+            <div class="demo-card animate-on-scroll">
+                <div class="demo-image">
+                    <img src="demo-fbla.png" alt="FBLA Website" onerror="this.parentElement.innerHTML='<span>FBLA</span>'">
+                </div>
+                <div class="demo-content">
+                    <h3>Westfield FBLA</h3>
+                    <p>Professional organization website featuring event calendars, member resources, and competition information. Built with modern front-end technologies and responsive design principles.</p>
+                    <a href="https://westfieldfbla.github.io/FBLA/" target="_blank" class="demo-link">View Live Site →</a>
+                </div>
+            </div>
+
+            <div class="demo-card animate-on-scroll">
+                <div class="demo-image">
+                    <img src="demo-safey.png" alt="SAFEY Platform" onerror="this.parentElement.innerHTML='<span>SAFEY</span>'">
+                </div>
+                <div class="demo-content">
+                    <h3>SAFEY Platform</h3>
+                    <p>Full-stack web application with user authentication, real-time data processing, and API integration. Demonstrates complex backend architecture and seamless user experience.</p>
+                    <a href="https://ag2027.github.io/SAFEY_1/" target="_blank" class="demo-link">View Live Site →</a>
+                </div>
+            </div>
+
+            <div class="demo-card animate-on-scroll">
+                <div class="demo-image">
+                    <img src="demo-musicraft.png" alt="Musicraft Therapy" onerror="this.parentElement.innerHTML='<span>Musicraft</span>'">
+                </div>
+                <div class="demo-content">
+                    <h3>Musicraft Therapy</h3>
+                    <p>Clean, accessible therapy services website with service descriptions and mobile-responsive design optimized for conversions. Focus on user experience and accessibility.</p>
+                    <a href="https://amrik-majumdar.github.io/musicraft-therapy/" target="_blank" class="demo-link">View Live Site →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <h2 class="animate-on-scroll">Frequently Asked Questions</h2>
+        <p class="section-subtitle animate-on-scroll">Everything you need to know about working with WebNest</p>
+        <div class="faq-container">
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question">How long does it take to build a website?</div>
+                <div class="faq-answer">Most projects are completed within 2-4 weeks, depending on complexity and content availability. Simple sites can be ready in as little as 1-2 weeks, while more complex projects with custom features may take 4-6 weeks. Rush delivery is available for an additional fee.</div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question">What's included in the monthly maintenance plan?</div>
+                <div class="faq-answer">The $300/month plan includes unlimited content updates, design edits, security monitoring, performance optimization, and priority support. You can request changes anytime via email or phone, and I'll implement them quickly—usually within 24-48 hours for standard updates.</div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question">Do I own the website after it's built?</div>
+                <div class="faq-answer">Yes! You own all the code and content. With the one-time build option, you receive full access to everything immediately. With the maintenance plan, you maintain ownership throughout, and can cancel anytime to take full control without any restrictions.</div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question">Can you help with domain and hosting?</div>
+                <div class="faq-answer">Absolutely! I can guide you through purchasing a custom domain and setting up hosting. Domain costs are typically $15-30/year, and hosting ranges from $5-20/month depending on your needs. I'll help you choose the best options and handle all technical setup.</div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question">What if I need additional features later?</div>
+                <div class="faq-answer">Additional features and pages can be added anytime. If you're on the maintenance plan, small additions are often included. Larger features like e-commerce, booking systems, or custom integrations are quoted separately based on complexity.</div>
+            </div>
+
+            <div class="faq-item animate-on-scroll">
+                <div class="faq-question">What happens if I want to cancel the maintenance plan?</div>
+                <div class="faq-answer">You can cancel anytime with 30 days notice. There are no long-term contracts or cancellation fees. You'll retain full ownership of your website and all the code, and I'll help ensure a smooth transition.</div>
+            </div>
+
+            <div class="faq-form animate-on-scroll">
+                <h3 style="margin-bottom: 1rem;">Have a Different Question?</h3>
+                <form id="faqForm">
+                    <div class="form-group">
+                        <label for="faqName">Your Name</label>
+                        <input type="text" id="faqName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqEmail">Your Email</label>
+                        <input type="email" id="faqEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="faqQuestion">Your Question</label>
+                        <textarea id="faqQuestion" required></textarea>
+                    </div>
+                    <button type="submit">Send Question</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="animate-on-scroll">Let's Build Something Great</h2>
+        <p class="section-subtitle animate-on-scroll">Request a free website audit and see how WebNest can help your business</p>
+        <div class="contact-form animate-on-scroll">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email *</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Tell Me About Your Project *</label>
+                    <textarea id="message" required placeholder="Describe your business, what kind of website you need, and any specific features you're interested in..."></textarea>
+                </div>
+                <button type="submit">Request Free Audit</button>
+            </form>
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light);">
+                Or email directly: <a href="mailto:webnestam@gmail.com" style="color: var(--primary); font-weight: 600;">webnestam@gmail.com</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 WebNest. Professional website development by Amrik Majumdar.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Northern Virginia | <a href="mailto:webnestam@gmail.com" style="color: white;">webnestam@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            const subject = encodeURIComponent('Website Inquiry from ' + name);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+            
+            window.location.href = `mailto:webnestam@gmail.com?subject=${subject}&body=${body}`;
+        });
+
+        // FAQ form submission
+        document.getElementById('faqForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('faqName').value;
+            const email = document.getElementById('faqEmail').value;
+            const question = document.getElementById('faqQuestion').value;
+            
+            const subject = encodeURIComponent('FAQ Question from ' + name);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nQuestion:\n${question}`);
+            
+            window.location.href = `mailto:webnestam@gmail.com?subject=${subject}&body=${body}`;
+        });
+    </script>
+</body>
+</html>
