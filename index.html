@@ -661,6 +661,10 @@
             transition: transform 0.4s ease;
         }
 
+        .demo-img img {
+            object-fit: cover;
+        }
+
         .demo-card:hover .demo-image img {
             transform: scale(1.05);
         }
@@ -1297,7 +1301,7 @@
             </div>
 
             <div class="demo-card animate-on-scroll">
-                <div class="demo-image">
+                <div class="demo-img">
                     <img src="demo-safey.png" alt="SAFEY Platform" onerror="this.parentElement.innerHTML='<span>SAFEY</span>'">
                 </div>
                 <div class="demo-content">
