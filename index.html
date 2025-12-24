@@ -1478,10 +1478,13 @@
                 const templateParams = {
                     from_name: name,
                     from_email: email,
-                    message: message,
-                    to_email: 'webnestam@gmail.com'
+                    message: message
                 };
 
+                // Send notification to you
+                await emailjs.send('service_o0fvkmm', 'template_upzyfcy', templateParams);
+                
+                // Send confirmation to customer
                 await emailjs.send('service_o0fvkmm', 'template_h6gzqmt', templateParams);
                 
                 form.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
@@ -1539,10 +1542,13 @@
                 const templateParams = {
                     from_name: name,
                     from_email: email,
-                    message: question,
-                    to_email: 'webnestam@gmail.com'
+                    message: question
                 };
 
+                // Send notification to you
+                await emailjs.send('service_o0fvkmm', 'template_upzyfcy', templateParams);
+                
+                // Send confirmation to customer
                 await emailjs.send('service_o0fvkmm', 'template_h6gzqmt', templateParams);
                 
                 form.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
