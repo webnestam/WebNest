@@ -6,6 +6,9 @@
     <meta name="description" content="WebNest - Professional website development for small businesses in Northern Virginia. Modern, mobile-first websites that drive results.">
     <meta name="keywords" content="web development, small business websites, Northern Virginia, ReactJS, full stack development">
     <title>WebNest | Professional Website Development for Small Businesses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,570 +17,699 @@
         }
 
         :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --primary-light: #a78bfa;
-            --secondary: #0f172a;
-            --accent: #6366f1;
-            --text: #1e293b;
-            --text-light: #64748b;
+            --primary: #1a3a52;
+            --primary-dark: #0f2537;
+            --primary-light: #2a5a7a;
+            --accent: #d97757;
+            --accent-light: #e89778;
+            --accent-dark: #c85f3f;
+            --text: #1a1a1a;
+            --text-light: #5a5a5a;
+            --text-muted: #8a8a8a;
             --bg: #ffffff;
-            --bg-light: #f8fafc;
-            --border: #e2e8f0;
-            --success: #10b981;
+            --bg-light: #f7f7f7;
+            --bg-accent: #fafafa;
+            --border: #e0e0e0;
+            --success: #2d7a5f;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: var(--text);
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        h1, h2, h3 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.15;
+            color: var(--primary-dark);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        h1 { 
+            font-size: clamp(2.5rem, 7vw, 4.25rem);
+            letter-spacing: -0.02em;
+        }
+        h2 { 
+            font-size: clamp(2rem, 5.5vw, 3.25rem);
+            letter-spacing: -0.02em;
+        }
+        h3 { 
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
         }
 
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Navbar */
+        /* Navigation - More assertive active states */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
             z-index: 1000;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
         nav.scrolled {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+            border-bottom-color: transparent;
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 1.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.6rem;
+            font-family: 'Newsreader', serif;
+            font-size: 1.625rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
+            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
             position: relative;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
         }
 
-        .nav-links a:hover {
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:not(.active):hover {
             color: var(--primary);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .nav-cta {
+            padding: 0.75rem 1.75rem;
+            background: var(--accent);
+            color: white !important;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        .nav-cta::after {
+            display: none !important;
         }
 
         .mobile-toggle {
             display: none;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             cursor: pointer;
+            padding: 0.5rem;
         }
 
         .mobile-toggle span {
-            width: 25px;
-            height: 3px;
+            width: 22px;
+            height: 2px;
             background: var(--text);
             transition: all 0.3s ease;
             border-radius: 2px;
         }
 
-        /* Hero Section */
+        /* Hero - Asymmetric, confident layout */
         .hero {
-            margin-top: 70px;
-            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #ddd6fe 100%);
-            min-height: 650px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            margin-top: 85px;
+            padding: 7rem 3rem 5rem;
+            background: white;
             position: relative;
-            overflow: hidden;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 8s ease-in-out infinite;
+            top: 0;
+            right: 0;
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(217, 119, 87, 0.03) 100%);
+            pointer-events: none;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -5%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 10s ease-in-out infinite reverse;
+        .hero-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            padding: 2rem;
-            animation: fadeInUp 1s ease-out;
+            max-width: 620px;
+        }
+
+        .hero-meta {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            color: var(--secondary);
-            line-height: 1.2;
+            margin-bottom: 2rem;
+            line-height: 1.1;
         }
 
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
+        .hero-subtitle {
+            font-size: 1.25rem;
             color: var(--text-light);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 3rem;
+            line-height: 1.65;
+            max-width: 560px;
         }
 
-        .cta-button {
+        .cta-group {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            margin-bottom: 5rem;
+        }
+
+        .btn-primary {
             display: inline-block;
-            padding: 1.1rem 2.8rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 1rem 2rem;
+            background: var(--accent);
             color: white;
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-            position: relative;
-            overflow: hidden;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border: 2px solid var(--accent);
         }
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s ease;
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            border-color: var(--accent-dark);
+            transform: translateY(-1px);
         }
 
-        .cta-button:hover::before {
-            left: 100%;
+        .btn-secondary {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            border: 2px solid var(--primary);
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: var(--secondary);
+        .btn-secondary:hover {
+            background: var(--primary);
             color: white;
-            padding: 3rem 2rem;
-            text-align: center;
         }
 
-        .stats-grid {
+        .hero-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            max-width: 1000px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem 3rem;
+            max-width: 480px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-check {
+            width: 24px;
+            height: 24px;
+            background: var(--success);
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        .feature-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* Stats Bar - Full width for contrast */
+        .stats-bar {
+            background: var(--primary-dark);
+            color: white;
+            padding: 3.5rem 3rem;
+        }
+
+        .stats-container {
+            max-width: 1280px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
         }
 
         .stat-item {
-            padding: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: scale(1.1);
+            text-align: center;
         }
 
         .stat-number {
             font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            display: block;
+            margin-bottom: 0.625rem;
+            color: var(--accent-light);
+            line-height: 1;
         }
 
         .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 500;
         }
 
-        /* Sections */
+        /* Section rhythm - varied widths and spacing */
         section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
+            padding: 6rem 3rem;
+        }
+
+        .section-container {
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        section:nth-child(even) {
-            background: var(--bg-light);
+        .section-container-wide {
+            max-width: 1280px;
+            margin: 0 auto;
         }
 
-        h2 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-            text-align: center;
-            font-weight: 800;
+        .section-container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 1.15rem;
+        .section-header {
             margin-bottom: 4rem;
         }
 
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+        .section-label {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
         }
 
-        .about-text h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.9rem;
+        .section-title {
+            margin-bottom: 1.25rem;
+            max-width: 700px;
         }
 
-        .about-text p {
-            margin-bottom: 1.2rem;
+        .section-subtitle {
+            font-size: 1.125rem;
             color: var(--text-light);
+            line-height: 1.7;
+            max-width: 640px;
+        }
+
+        /* About - Asymmetric grid */
+        #about {
+            background: var(--bg-accent);
+            padding: 7rem 3rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .about-content h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.875rem;
+        }
+
+        .about-content p {
+            color: var(--text-light);
+            margin-bottom: 1.75rem;
             line-height: 1.8;
-            font-size: 1.05rem;
+            font-size: 1.0625rem;
+        }
+
+        .about-highlight {
+            background: white;
+            border-left: 4px solid var(--accent);
+            padding: 1.75rem 2rem;
+            margin: 2.5rem 0;
+            border-radius: 2px;
+        }
+
+        .about-highlight p {
+            margin: 0;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1.0625rem;
         }
 
         .skills-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .skill-item {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-            margin-top: 2rem;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.2s ease;
         }
 
-        .skill-tag {
-            padding: 0.6rem 1.2rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: default;
+        .skill-item:last-child {
+            border-bottom: none;
         }
 
-        .skill-tag:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        .skill-item:hover {
+            color: var(--accent);
+            padding-left: 0.5rem;
         }
 
-        .about-image-container {
-            position: relative;
-            border-radius: 16px;
+        .skill-icon {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .about-image {
+            position: sticky;
+            top: 120px;
+        }
+
+        .about-image-wrapper {
+            border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            aspect-ratio: 3/4;
+            background: var(--bg-light);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
 
-        .about-image-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-        }
-
-        .about-image-container img {
+        .about-image-wrapper img {
             width: 100%;
-            height: 450px;
+            height: 100%;
             object-fit: cover;
-            display: block;
         }
 
         .about-image-placeholder {
             width: 100%;
-            height: 450px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.3rem;
+            color: var(--text-muted);
             font-weight: 600;
+            text-align: center;
+            padding: 2rem;
         }
 
-        /* Pricing Section */
-        .pricing-container {
+        /* Pricing - Tighter, more confident */
+        #pricing {
+            background: white;
+        }
+
+        .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2.5rem;
-            margin-top: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .pricing-card {
             background: white;
             border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
+            border-radius: 4px;
+            padding: 3rem 2.5rem;
+            transition: all 0.25s ease;
             position: relative;
         }
 
         .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            border-color: var(--primary);
+            border-color: var(--primary-light);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
         }
 
         .pricing-card.featured {
             border-color: var(--primary);
-            position: relative;
-            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+            background: linear-gradient(180deg, white 0%, rgba(26, 58, 82, 0.01) 100%);
         }
 
-        .featured-badge {
+        .featured-label {
             position: absolute;
-            top: -15px;
-            right: 25px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            top: -14px;
+            left: 2.5rem;
+            background: var(--primary);
             color: white;
-            padding: 0.4rem 1.2rem;
-            border-radius: 25px;
-            font-size: 0.85rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 4px;
+            font-size: 0.8125rem;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .pricing-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        .pricing-description {
+            color: var(--text-light);
+            font-size: 0.9375rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .price-display {
+            margin-bottom: 2.5rem;
         }
 
         .price {
-            font-size: 2.8rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 1rem 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1;
+            letter-spacing: -0.02em;
         }
 
-        .price-sub {
-            color: var(--text-light);
-            font-size: 0.95rem;
+        .price-details {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-weight: 500;
         }
 
         .features-list {
             list-style: none;
-            margin: 2rem 0;
+            margin-bottom: 2.5rem;
         }
 
         .features-list li {
-            padding: 0.8rem 0;
+            padding: 1rem 0;
             display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            transition: all 0.2s ease;
+            align-items: flex-start;
+            gap: 1rem;
+            font-size: 0.9375rem;
         }
 
-        .features-list li:hover {
-            padding-left: 5px;
-        }
-
-        .features-list li:before {
+        .features-list li::before {
             content: "✓";
             color: var(--success);
             font-weight: bold;
-            font-size: 1.3rem;
-        }
-
-        .features-list li.unavailable:before {
-            content: "✗";
-            color: var(--text-light);
+            flex-shrink: 0;
+            font-size: 1.125rem;
         }
 
         .features-list li.unavailable {
-            color: var(--text-light);
+            color: var(--text-muted);
+            opacity: 0.6;
         }
 
-        /* Add-ons Section */
-        .addons-section {
-            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
-            padding: 5rem 2rem;
+        .features-list li.unavailable::before {
+            content: "—";
+            color: var(--text-muted);
+        }
+
+        .pricing-cta {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .pricing-cta:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Add-ons - Dense grid, more visual weight */
+        #addons {
+            background: var(--bg-light);
+            padding: 7rem 3rem;
         }
 
         .addons-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            margin-top: 3rem;
         }
 
         .addon-card {
             background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            border-radius: 4px;
+            padding: 2.5rem;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
         .addon-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-            border-color: var(--primary-light);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
         }
 
         .addon-icon {
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .addon-card:hover .addon-icon {
-            transform: scale(1.1) rotate(5deg);
+            font-size: 2.25rem;
+            margin-bottom: 1.25rem;
+            display: block;
         }
 
         .addon-card h3 {
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-            font-size: 1.4rem;
+            font-size: 1.375rem;
+            margin-bottom: 0.75rem;
         }
 
         .addon-price {
-            color: var(--primary);
+            color: var(--accent);
             font-weight: 700;
-            font-size: 1.15rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 1.0625rem;
         }
 
-        .addon-card p {
+        .addon-description {
             color: var(--text-light);
             line-height: 1.7;
-            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+            margin-bottom: 1.25rem;
         }
 
         .addon-features {
             list-style: none;
-            margin-top: 1rem;
         }
 
         .addon-features li {
             padding: 0.5rem 0;
             color: var(--text-light);
-            font-size: 0.95rem;
-            padding-left: 1.8rem;
+            font-size: 0.875rem;
+            padding-left: 1.5rem;
             position: relative;
         }
 
-        .addon-features li:before {
+        .addon-features li::before {
             content: "•";
-            color: var(--primary);
-            font-weight: bold;
+            color: var(--accent);
             position: absolute;
             left: 0;
-            font-size: 1.3rem;
+            font-weight: bold;
+            font-size: 1.25rem;
         }
 
-        /* Comparison Table */
-        .comparison-table {
+        .addons-note {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .addons-note p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .addons-note p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Comparison - Wider, more breathing room */
+        #comparison {
+            background: white;
+        }
+
+        .comparison-table-wrapper {
             overflow-x: auto;
-            margin: 3rem 0;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-radius: 4px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
 
         table {
@@ -587,69 +719,72 @@
         }
 
         th, td {
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             text-align: left;
-            border-bottom: 1px solid var(--border);
         }
 
         th {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            background: var(--primary-dark);
             color: white;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         td {
-            color: var(--text);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
         }
 
-        tr:hover td {
-            background: var(--bg-light);
+        tr:last-child td {
+            border-bottom: none;
         }
 
         .check {
             color: var(--success);
             font-weight: bold;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
         }
 
         .cross {
-            color: var(--text-light);
-            font-size: 1.4rem;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            opacity: 0.4;
         }
 
-        /* Demo Sites */
+        /* Portfolio - Asymmetric sizing */
+        #demos {
+            background: var(--bg-accent);
+            padding: 7rem 3rem;
+        }
+
         .demos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
+            grid-template-columns: 1.2fr 0.8fr 1fr;
+            gap: 2rem;
         }
 
         .demo-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.4s ease;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
 
         .demo-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
         }
 
         .demo-image {
             width: 100%;
             height: 240px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            background: var(--bg-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.6rem;
-            font-weight: 700;
-            position: relative;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 1.25rem;
             overflow: hidden;
         }
 
@@ -658,181 +793,320 @@
             height: 100%;
             object-fit: contain;
             background: white;
-            transition: transform 0.4s ease;
-        }
-
-        .demo-img img {
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-            background: white;
-            transition: transform 0.4s ease;
-        }
-
-        .demo-card:hover .demo-image img {
-            transform: scale(1.05);
         }
 
         .demo-content {
-            padding: 1.8rem;
+            padding: 2rem;
         }
 
         .demo-content h3 {
-            margin-bottom: 0.7rem;
-            color: var(--secondary);
-            font-size: 1.5rem;
+            font-size: 1.375rem;
+            margin-bottom: 1rem;
         }
 
         .demo-content p {
             color: var(--text-light);
-            margin-bottom: 1.2rem;
             line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
         }
 
         .demo-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            transition: gap 0.2s ease;
         }
 
         .demo-link:hover {
-            color: var(--primary-dark);
-            gap: 0.8rem;
+            color: var(--accent-dark);
+            gap: 0.75rem;
         }
 
-        /* FAQ Section */
+        /* FAQ - Narrower, more focused */
+        #faq {
+            background: white;
+        }
+
         .faq-container {
-            max-width: 900px;
-            margin: 3rem auto;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .faq-item {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 1.2rem;
-            padding: 1.8rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-            border-left: 4px solid var(--primary);
-            transition: all 0.3s ease;
-            cursor: pointer;
+            background: transparent;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-        .faq-item:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            transform: translateX(5px);
+        .faq-item:last-child {
+            border-bottom: none;
         }
 
         .faq-question {
             font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.7rem;
-            font-size: 1.15rem;
+            font-size: 1.125rem;
+            color: var(--text);
+            margin-bottom: 1rem;
         }
 
         .faq-answer {
             color: var(--text-light);
-            line-height: 1.8;
+            line-height: 1.85;
+            font-size: 1rem;
         }
 
-        .faq-form {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            margin-top: 3rem;
-            border: 2px solid var(--border);
+        /* Contact - Clean, centered */
+        #contact {
+            background: var(--bg-accent);
+            padding: 7rem 3rem;
         }
 
-        /* Contact Form */
+        .contact-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .contact-form {
-            max-width: 700px;
-            margin: 3rem auto;
             background: white;
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            padding: 3rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
         }
 
         .form-group {
-            margin-bottom: 1.8rem;
+            margin-bottom: 2rem;
         }
 
         label {
             display: block;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
-            color: var(--secondary);
+            color: var(--text);
+            font-size: 0.9375rem;
         }
 
         input, textarea {
             width: 100%;
-            padding: 0.9rem;
+            padding: 1rem;
             border: 2px solid var(--border);
-            border-radius: 10px;
+            border-radius: 4px;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-family: inherit;
         }
 
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
 
         textarea {
-            min-height: 130px;
+            min-height: 150px;
             resize: vertical;
         }
 
-        button[type="submit"] {
+        .submit-btn {
             width: 100%;
-            padding: 1.1rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 1.125rem;
+            background: var(--accent);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1.0625rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            transition: all 0.2s ease;
         }
 
-        button[type="submit"]:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+        .submit-btn:hover:not(:disabled) {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
         }
 
-        button[type="submit"]:disabled {
-            opacity: 0.7;
+        .submit-btn:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .contact-info p {
+            color: var(--text-light);
+            font-size: 0.9375rem;
+            margin-bottom: 0.625rem;
+        }
+
+        .contact-email {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.0625rem;
+        }
+
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+
+        /* Payment - Subtle, professional */
+        .payment-section {
+            background: white;
+            border-radius: 4px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .payment-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .payment-header h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.625rem;
+        }
+
+        .payment-header p {
+            color: var(--text-light);
+            font-size: 0.9375rem;
+        }
+
+        .payment-content {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .payment-qr {
+            flex-shrink: 0;
+        }
+
+        .payment-qr img {
+            width: 150px;
+            height: 150px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .payment-details {
+            max-width: 260px;
+        }
+
+        .payment-detail-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .payment-detail-label {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 0.375rem;
+        }
+
+        .payment-detail-value {
+            font-size: 0.9375rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .payment-note {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            font-size: 0.875rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            text-align: center;
         }
 
         /* Footer */
         footer {
-            background: var(--secondary);
+            background: var(--primary-dark);
             color: white;
+            padding: 3rem 3rem;
             text-align: center;
-            padding: 2.5rem;
+        }
+
+        footer p {
+            opacity: 0.95;
+            line-height: 1.8;
+            font-size: 0.9375rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-image {
+                position: static;
+                order: -1;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 560px;
+            }
+
+            .addons-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-container {
+                padding: 1.25rem 2rem;
+            }
+
             .nav-links {
                 position: fixed;
-                top: 70px;
+                top: 73px;
                 left: -100%;
                 flex-direction: column;
                 background: white;
                 width: 100%;
                 padding: 2rem;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                gap: 1.5rem;
                 transition: left 0.3s ease;
+                border-bottom: 1px solid var(--border);
+                align-items: flex-start;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             }
 
             .nav-links.active {
@@ -843,150 +1117,111 @@
                 display: flex;
             }
 
-            .nav-container {
-                padding: 1rem 1.5rem;
+            section {
+                padding: 4.5rem 2rem;
             }
 
             .hero {
-                min-height: 550px;
+                padding: 5rem 2rem 4rem;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero::before {
+                width: 60%;
             }
 
-            .hero p {
-                font-size: 1.1rem;
+            .stats-bar {
+                padding: 3rem 2rem;
             }
 
-            h2 {
-                font-size: 2.2rem;
-            }
-
-            .section-subtitle {
-                font-size: 1rem;
-            }
-
-            .about-content {
+            .hero-features {
                 grid-template-columns: 1fr;
             }
 
-            .about-image-container img,
-            .about-image-placeholder {
-                height: 320px;
-            }
-
-            .pricing-container {
-                grid-template-columns: 1fr;
-            }
-
-            .addons-grid {
-                grid-template-columns: 1fr;
-            }
-
+            .addons-grid,
             .demos-grid {
                 grid-template-columns: 1fr;
             }
 
-            .demo-image {
-                height: 200px;
+            .contact-form {
+                padding: 2.5rem 2rem;
             }
 
-            section {
-                padding: 3.5rem 1.5rem;
-            }
-
-            .contact-form, .faq-form {
-                padding: 2rem 1.5rem;
-            }
-
-            .stats-section {
-                padding: 3rem 1.5rem;
-            }
-
-            .addons-section {
-                padding: 4rem 1.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
-
-            .stat-number {
-                font-size: 2.5rem;
-            }
-
-            .stat-label {
-                font-size: 1rem;
+            .payment-content {
+                flex-direction: column;
+                text-align: center;
             }
 
             table {
-                font-size: 0.9rem;
+                font-size: 0.875rem;
             }
 
             th, td {
-                padding: 1rem;
+                padding: 1.25rem 1rem;
+            }
+
+            .nav-container {
+                padding: 1.25rem 1.5rem;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero, .stats-bar, #about, #addons, #demos, #contact {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
             }
         }
 
         @media (max-width: 480px) {
-            .hero {
-                min-height: 480px;
-                padding: 3rem 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            h2 {
-                font-size: 1.9rem;
-            }
-
-            .price {
-                font-size: 2.3rem;
-            }
-
-            .pricing-card, .addon-card {
-                padding: 1.8rem;
-            }
-
-            .cta-button {
-                padding: 1rem 2.2rem;
-                font-size: 1rem;
-            }
-
             .logo {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
 
-            section {
-                padding: 2.5rem 1.25rem;
+            .cta-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .stat-number {
+                font-size: 2.75rem;
+            }
+
+            .pricing-card,
+            .addon-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .payment-qr img {
+                width: 140px;
+                height: 140px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">WebNest</div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#addons">Add-ons</a></li>
-                <li><a href="#demos">Portfolio</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                <li><a href="#addons" class="nav-link">Services</a></li>
+                <li><a href="#demos" class="nav-link">Portfolio</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contact" class="nav-cta">Get Started</a></li>
             </ul>
             <div class="mobile-toggle" id="mobileToggle">
                 <span></span>
@@ -996,421 +1231,534 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Professional Websites for <span>Small Businesses</span></h1>
-            <p>Modern, mobile-first websites that help your business grow. Built with care, delivered with excellence.</p>
-            <a href="#contact" class="cta-button">Request a Free Audit</a>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-meta">Northern Virginia Web Development</div>
+                <h1>Professional Websites for Small Businesses</h1>
+                <p class="hero-subtitle">
+                    Modern, mobile-first websites that help your business grow. Built with care, delivered with excellence.
+                </p>
+                <div class="cta-group">
+                    <a href="#contact" class="btn-primary">Request a Free Audit</a>
+                    <a href="#demos" class="btn-secondary">View Portfolio</a>
+                </div>
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">2-4 Week Delivery</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">100% Mobile Optimized</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Direct Communication</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">24/7 Support Available</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="stats-section">
-        <div class="stats-grid">
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="stats-container">
             <div class="stat-item">
-                <div class="stat-number">2-4</div>
-                <div class="stat-label">Week Delivery</div>
+                <span class="stat-number">2-4</span>
+                <span class="stat-label">Week Delivery</span>
             </div>
             <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Mobile Optimized</div>
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Mobile Optimized</span>
             </div>
             <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Support Available</div>
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Support Available</span>
             </div>
             <div class="stat-item">
-                <div class="stat-number">∞</div>
-                <div class="stat-label">Updates (Maintain Plan)</div>
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Updates (Maintain Plan)</span>
             </div>
         </div>
     </section>
 
+    <!-- About Section -->
     <section id="about">
-        <h2 class="animate-on-scroll">About WebNest</h2>
-        <p class="section-subtitle animate-on-scroll">Personalized web development that puts your business first</p>
-        <div class="about-content">
-            <div class="about-text animate-on-scroll">
-                <h3>Hi, I'm Amrik Majumdar</h3>
-                <p>I'm a full-stack developer based in Northern Virginia, specializing in creating professional websites for small businesses. Unlike generic website builders, I provide personalized service, custom solutions, and ongoing support to ensure your online presence truly represents your brand.</p>
-                <p>With experience in both front-end and back-end development, I build websites that are not only beautiful but also fast, secure, and optimized for conversions. Every project receives the same level of attention and craftsmanship, whether it's a simple landing page or a complex web application.</p>
-                <p>My approach focuses on understanding your unique business needs and creating solutions that drive real results. From the initial consultation to launch and beyond, I'm with you every step of the way.</p>
-                <div class="skills-list">
-                    <span class="skill-tag">ReactJS</span>
-                    <span class="skill-tag">Full Stack</span>
-                    <span class="skill-tag">API Integration</span>
-                    <span class="skill-tag">Mobile-First Design</span>
-                    <span class="skill-tag">Responsive UI/UX</span>
-                    <span class="skill-tag">Performance Optimization</span>
-                </div>
+        <div class="section-container-wide">
+            <div class="section-header">
+                <div class="section-label">About WebNest</div>
+                <h2 class="section-title">Personalized web development that puts your business first</h2>
             </div>
-            <div class="about-image-container animate-on-scroll">
-                <img src="about-image.jpg" alt="Web Development" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="about-image-placeholder" style="display: none;">
-                    Professional Web Development
+            <div class="about-grid">
+                <div class="about-content">
+                    <h3>Hi, I'm Amrik Majumdar</h3>
+                    <p>
+                        I'm a full-stack developer based in Northern Virginia, specializing in creating professional websites for small businesses. Unlike generic website builders, I provide personalized service, custom solutions, and ongoing support to ensure your online presence truly represents your brand.
+                    </p>
+                    <div class="about-highlight">
+                        <p>Every project receives the same level of attention and craftsmanship, whether it's a simple landing page or a complex web application.</p>
+                    </div>
+                    <p>
+                        With experience in both front-end and back-end development, I build websites that are not only beautiful but also fast, secure, and optimized for conversions. My approach focuses on understanding your unique business needs and creating solutions that drive real results.
+                    </p>
+                    <p>
+                        From the initial consultation to launch and beyond, I'm with you every step of the way.
+                    </p>
+                    <div class="skills-list">
+                        <div class="skill-item">
+                            <span class="skill-icon"></span>
+                            ReactJS
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-icon"></span>
+                            Full Stack
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-icon"></span>
+                            API Integration
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-icon"></span>
+                            Mobile-First Design
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-icon"></span>
+                            Responsive UI/UX
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-icon"></span>
+                            Performance Optimization
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-wrapper">
+                        <img src="about-image.jpg" alt="Web Development" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="about-image-placeholder" style="display: none;">
+                            Professional Web Development
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Pricing Section -->
     <section id="pricing">
-        <h2 class="animate-on-scroll">Simple, Transparent Pricing</h2>
-        <p class="section-subtitle animate-on-scroll">Choose the plan that fits your business needs</p>
-        <div class="pricing-container">
-            <div class="pricing-card animate-on-scroll">
-                <h3>One-Time Build</h3>
-                <div class="price">$1,000<span class="price-sub"> one-time</span></div>
-                <p style="color: var(--text-light); margin-bottom: 1.5rem;">Perfect for businesses that want a professional website with no ongoing commitment.</p>
-                <ul class="features-list">
-                    <li>Full website development</li>
-                    <li>Mobile-first responsive design</li>
-                    <li>SEO optimization</li>
-                    <li>Fast loading performance</li>
-                    <li>Initial content setup</li>
-                    <li>Source code ownership</li>
-                    <li class="unavailable">Ongoing updates</li>
-                    <li class="unavailable">Real-time support</li>
-                    <li class="unavailable">Security monitoring</li>
-                </ul>
-                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; display: block;">Get Started</a>
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">Pricing</div>
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that fits your business needs</p>
             </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>One-Time Build</h3>
+                    <p class="pricing-description">Perfect for businesses that want a professional website with no ongoing commitment.</p>
+                    <div class="price-display">
+                        <div class="price">$1,000</div>
+                        <div class="price-details">one-time payment</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Full website development</li>
+                        <li>Mobile-first responsive design</li>
+                        <li>SEO optimization</li>
+                        <li>Fast loading performance</li>
+                        <li>Initial content setup</li>
+                        <li>Source code ownership</li>
+                        <li class="unavailable">Ongoing updates</li>
+                        <li class="unavailable">Real-time support</li>
+                        <li class="unavailable">Security monitoring</li>
+                    </ul>
+                    <a href="#contact" class="pricing-cta">Get Started</a>
+                </div>
 
-            <div class="pricing-card featured animate-on-scroll">
-                <span class="featured-badge">Most Popular</span>
-                <h3>Build + Maintain</h3>
-                <div class="price">$700<span class="price-sub"> + $300/month</span></div>
-                <p style="color: var(--text-light); margin-bottom: 1.5rem;">For businesses that want continuous optimization and dedicated support.</p>
-                <ul class="features-list">
-                    <li>Full website development</li>
-                    <li>Mobile-first responsive design</li>
-                    <li>SEO optimization</li>
-                    <li>Fast loading performance</li>
-                    <li>Initial content setup</li>
-                    <li>Source code ownership</li>
-                    <li>Unlimited updates & edits</li>
-                    <li>Priority real-time support</li>
-                    <li>Full security monitoring</li>
-                    <li>Performance optimization</li>
-                    <li>Content strategy assistance</li>
-                </ul>
-                <a href="#contact" class="cta-button" style="width: 100%; text-align: center; display: block;">Get Started</a>
+                <div class="pricing-card featured">
+                    <span class="featured-label">Most Popular</span>
+                    <h3>Build + Maintain</h3>
+                    <p class="pricing-description">For businesses that want continuous optimization and dedicated support.</p>
+                    <div class="price-display">
+                        <div class="price">$700</div>
+                        <div class="price-details">+ $300/month</div>
+                    </div>
+                    <ul class="features-list">
+                        <li>Full website development</li>
+                        <li>Mobile-first responsive design</li>
+                        <li>SEO optimization</li>
+                        <li>Fast loading performance</li>
+                        <li>Initial content setup</li>
+                        <li>Source code ownership</li>
+                        <li>Unlimited updates & edits</li>
+                        <li>Priority real-time support</li>
+                        <li>Full security monitoring</li>
+                        <li>Performance optimization</li>
+                        <li>Content strategy assistance</li>
+                    </ul>
+                    <a href="#contact" class="pricing-cta">Get Started</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="addons" class="addons-section">
-        <h2 class="animate-on-scroll">Premium Add-Ons & Services</h2>
-        <p class="section-subtitle animate-on-scroll">Enhance your website with powerful features and integrations</p>
-        <div class="addons-grid">
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">🌐</div>
-                <h3>Custom Domain Setup</h3>
-                <div class="addon-price">Starting at $15/year</div>
-                <p>Get a professional custom domain that matches your business name. Includes full DNS configuration and email setup guidance.</p>
-                <ul class="addon-features">
-                    <li>Domain registration assistance</li>
-                    <li>DNS configuration</li>
-                    <li>SSL certificate setup</li>
-                    <li>Professional email guidance</li>
-                </ul>
+    <!-- Add-ons Section -->
+    <section id="addons">
+        <div class="section-container-wide">
+            <div class="section-header">
+                <div class="section-label">Services</div>
+                <h2 class="section-title">Premium Add-Ons & Services</h2>
+                <p class="section-subtitle">Enhance your website with powerful features and integrations</p>
             </div>
+            <div class="addons-grid">
+                <div class="addon-card">
+                    <span class="addon-icon">🌐</span>
+                    <h3>Custom Domain Setup</h3>
+                    <div class="addon-price">Starting at $15/year</div>
+                    <p class="addon-description">Get a professional custom domain that matches your business name. Includes full DNS configuration and email setup guidance.</p>
+                    <ul class="addon-features">
+                        <li>Domain registration assistance</li>
+                        <li>DNS configuration</li>
+                        <li>SSL certificate setup</li>
+                        <li>Professional email guidance</li>
+                    </ul>
+                </div>
 
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">📧</div>
-                <h3>Email Integration</h3>
-                <div class="addon-price">$50 setup + service costs</div>
-                <p>Professional email marketing integration with platforms like Mailchimp, ConvertKit, or custom solutions.</p>
-                <ul class="addon-features">
-                    <li>Newsletter signup forms</li>
-                    <li>Automated email sequences</li>
-                    <li>Contact list management</li>
-                    <li>Analytics integration</li>
-                </ul>
+                <div class="addon-card">
+                    <span class="addon-icon">📧</span>
+                    <h3>Email Integration</h3>
+                    <div class="addon-price">$50 setup + service costs</div>
+                    <p class="addon-description">Professional email marketing integration with platforms like Mailchimp, ConvertKit, or custom solutions.</p>
+                    <ul class="addon-features">
+                        <li>Newsletter signup forms</li>
+                        <li>Automated email sequences</li>
+                        <li>Contact list management</li>
+                        <li>Analytics integration</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">🛒</span>
+                    <h3>E-Commerce Features</h3>
+                    <div class="addon-price">$200</div>
+                    <p class="addon-description">Add shopping cart functionality, payment processing, and inventory management to sell products or services online.</p>
+                    <ul class="addon-features">
+                        <li>Product catalog</li>
+                        <li>Secure payment gateway</li>
+                        <li>Shopping cart system</li>
+                        <li>Order management</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">📅</span>
+                    <h3>Booking System</h3>
+                    <div class="addon-price">$150</div>
+                    <p class="addon-description">Let customers schedule appointments, reserve tables, or book services directly through your website.</p>
+                    <ul class="addon-features">
+                        <li>Calendar integration</li>
+                        <li>Automated confirmations</li>
+                        <li>Payment collection</li>
+                        <li>Reminder notifications</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">📊</span>
+                    <h3>Analytics Dashboard</h3>
+                    <div class="addon-price">$150 setup</div>
+                    <p class="addon-description">Track visitor behavior, monitor performance, and gain insights with Google Analytics and custom reporting.</p>
+                    <ul class="addon-features">
+                        <li>Google Analytics setup</li>
+                        <li>Conversion tracking</li>
+                        <li>Custom reports</li>
+                        <li>Performance monitoring</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">🎨</span>
+                    <h3>Additional Pages</h3>
+                    <div class="addon-price">$100-$200 per page</div>
+                    <p class="addon-description">Expand your website with additional custom pages like blogs, galleries, team pages, or specialized landing pages.</p>
+                    <ul class="addon-features">
+                        <li>Custom page design</li>
+                        <li>Content integration</li>
+                        <li>SEO optimization</li>
+                        <li>Mobile responsive</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">🔗</span>
+                    <h3>API Integrations</h3>
+                    <div class="addon-price">$150</div>
+                    <p class="addon-description">Connect your website to third-party services like CRMs, payment processors, social media, or custom APIs.</p>
+                    <ul class="addon-features">
+                        <li>CRM integration</li>
+                        <li>Social media feeds</li>
+                        <li>Payment gateways</li>
+                        <li>Custom API connections</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">🎥</span>
+                    <h3>Media & Content</h3>
+                    <div class="addon-price">$150-$300</div>
+                    <p class="addon-description">Professional photo galleries, video integration, blog setup, and content management system implementation.</p>
+                    <ul class="addon-features">
+                        <li>Photo gallery systems</li>
+                        <li>Video embedding</li>
+                        <li>Blog platform setup</li>
+                        <li>Content management</li>
+                    </ul>
+                </div>
+
+                <div class="addon-card">
+                    <span class="addon-icon">🔒</span>
+                    <h3>Premium Security</h3>
+                    <div class="addon-price">$150 setup + $50/month</div>
+                    <p class="addon-description">Enhanced security features including advanced SSL, DDoS protection, regular security audits, and backup services.</p>
+                    <ul class="addon-features">
+                        <li>Advanced SSL certificates</li>
+                        <li>DDoS protection</li>
+                        <li>Daily backups</li>
+                        <li>Security monitoring</li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">🛒</div>
-                <h3>E-Commerce Features</h3>
-                <div class="addon-price">$200</div>
-                <p>Add shopping cart functionality, payment processing, and inventory management to sell products or services online.</p>
-                <ul class="addon-features">
-                    <li>Product catalog</li>
-                    <li>Secure payment gateway</li>
-                    <li>Shopping cart system</li>
-                    <li>Order management</li>
-                </ul>
-            </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">📅</div>
-                <h3>Booking System</h3>
-                <div class="addon-price">$150</div>
-                <p>Let customers schedule appointments, reserve tables, or book services directly through your website.</p>
-                <ul class="addon-features">
-                    <li>Calendar integration</li>
-                    <li>Automated confirmations</li>
-                    <li>Payment collection</li>
-                    <li>Reminder notifications</li>
-                </ul>
-            </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">📊</div>
-                <h3>Analytics Dashboard</h3>
-                <div class="addon-price">$150 setup</div>
-                <p>Track visitor behavior, monitor performance, and gain insights with Google Analytics and custom reporting.</p>
-                <ul class="addon-features">
-                    <li>Google Analytics setup</li>
-                    <li>Conversion tracking</li>
-                    <li>Custom reports</li>
-                    <li>Performance monitoring</li>
-                </ul>
-            </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">🎨</div>
-                <h3>Additional Pages</h3>
-                <div class="addon-price">$100-$200 per page</div>
-                <p>Expand your website with additional custom pages like blogs, galleries, team pages, or specialized landing pages.</p>
-                <ul class="addon-features">
-                    <li>Custom page design</li>
-                    <li>Content integration</li>
-                    <li>SEO optimization</li>
-                    <li>Mobile responsive</li>
-                </ul>
-            </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">🔗</div>
-                <h3>API Integrations</h3>
-                <div class="addon-price">$150</div>
-                <p>Connect your website to third-party services like CRMs, payment processors, social media, or custom APIs.</p>
-                <ul class="addon-features">
-                    <li>CRM integration</li>
-                    <li>Social media feeds</li>
-                    <li>Payment gateways</li>
-                    <li>Custom API connections</li>
-                </ul>
-            </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">🎥</div>
-                <h3>Media & Content</h3>
-                <div class="addon-price">$150-$300</div>
-                <p>Professional photo galleries, video integration, blog setup, and content management system implementation.</p>
-                <ul class="addon-features">
-                    <li>Photo gallery systems</li>
-                    <li>Video embedding</li>
-                    <li>Blog platform setup</li>
-                    <li>Content management</li>
-                </ul>
-            </div>
-
-            <div class="addon-card animate-on-scroll">
-                <div class="addon-icon">🔒</div>
-                <h3>Premium Security</h3>
-                <div class="addon-price">$150 setup + $50/month</div>
-                <p>Enhanced security features including advanced SSL, DDoS protection, regular security audits, and backup services.</p>
-                <ul class="addon-features">
-                    <li>Advanced SSL certificates</li>
-                    <li>DDoS protection</li>
-                    <li>Daily backups</li>
-                    <li>Security monitoring</li>
-                </ul>
+            <div class="addons-note">
+                <p><strong>Need something custom?</strong> Let's discuss your specific requirements and create a tailored solution for your business.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9375rem;">Prices may vary based on project complexity.</p>
             </div>
         </div>
-        <p style="text-align: center; margin-top: 3rem; color: var(--text); font-size: 1.1rem;">
-            <strong>Need something custom?</strong> Let's discuss your specific requirements and create a tailored solution for your business.
-        </p>
-        <p style="text-align: center; margin-top: 1rem; color: var(--text-light); font-size: 0.95rem;">
-            Prices may vary based on project complexity.
-        </p>
     </section>
 
+    <!-- Comparison Section -->
     <section id="comparison">
-        <h2 class="animate-on-scroll">Why Choose WebNest?</h2>
-        <p class="section-subtitle animate-on-scroll">Personalized service vs. generic website builders</p>
-        <div class="comparison-table animate-on-scroll">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>WebNest</th>
-                        <th>Website Builders</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Personalized Service</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Mobile-First Design</td>
-                        <td class="check">✓</td>
-                        <td class="check">✓</td>
-                    </tr>
-                    <tr>
-                        <td>Custom Code & Features</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Fast Loading Speed</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Rapid Updates (Maintain Plan)</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Single-Purpose Focus</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Direct Communication</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>No Template Limitations</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                    <tr>
-                        <td>Full Code Ownership</td>
-                        <td class="check">✓</td>
-                        <td class="cross">✗</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="section-container-wide">
+            <div class="section-header">
+                <div class="section-label">Comparison</div>
+                <h2 class="section-title">Why Choose WebNest?</h2>
+                <p class="section-subtitle">Personalized service vs. generic website builders</p>
+            </div>
+            <div class="comparison-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>WebNest</th>
+                            <th>Website Builders</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Personalized Service</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile-First Design</td>
+                            <td class="check">✓</td>
+                            <td class="check">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Code & Features</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>Fast Loading Speed</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>Rapid Updates (Maintain Plan)</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>Single-Purpose Focus</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>Direct Communication</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>No Template Limitations</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                        <tr>
+                            <td>Full Code Ownership</td>
+                            <td class="check">✓</td>
+                            <td class="cross">×</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
+    <!-- Portfolio Section -->
     <section id="demos">
-        <h2 class="animate-on-scroll">Portfolio</h2>
-        <p class="section-subtitle animate-on-scroll">See what I've built for real organizations</p>
-        <div class="demos-grid">
-            <div class="demo-card animate-on-scroll">
-                <div class="demo-image">
-                    <img src="demo-fbla.png" alt="FBLA Website" onerror="this.parentElement.innerHTML='<span>FBLA</span>'">
-                </div>
-                <div class="demo-content">
-                    <h3>Westfield FBLA</h3>
-                    <p>Professional organization website featuring event calendars, member resources, and competition information. Built with modern front-end technologies and responsive design principles.</p>
-                    <a href="https://westfieldfbla.github.io/FBLA/" target="_blank" class="demo-link">View Live Site →</a>
-                </div>
+        <div class="section-container-wide">
+            <div class="section-header">
+                <div class="section-label">Portfolio</div>
+                <h2 class="section-title">See what I've built for real organizations</h2>
             </div>
+            <div class="demos-grid">
+                <div class="demo-card">
+                    <div class="demo-image">
+                        <img src="demo-fbla.png" alt="FBLA Website" onerror="this.parentElement.innerHTML='FBLA'">
+                    </div>
+                    <div class="demo-content">
+                        <h3>Westfield FBLA</h3>
+                        <p>Professional organization website featuring event calendars, member resources, and competition information. Built with modern front-end technologies and responsive design principles.</p>
+                        <a href="https://westfieldfbla.github.io/FBLA/" target="_blank" class="demo-link">View Live Site →</a>
+                    </div>
+                </div>
 
-            <div class="demo-card animate-on-scroll">
-                <div class="demo-img">
-                    <img src="demo-safey.png" alt="SAFEY Platform" onerror="this.parentElement.innerHTML='<span>SAFEY</span>'">
+                <div class="demo-card">
+                    <div class="demo-image">
+                        <img src="demo-safey.png" alt="SAFEY Platform" onerror="this.parentElement.innerHTML='SAFEY'">
+                    </div>
+                    <div class="demo-content">
+                        <h3>SAFEY Platform</h3>
+                        <p>Full-stack web application with user authentication, real-time data processing, and API integration. Demonstrates complex backend architecture and seamless user experience.</p>
+                        <a href="https://ag2027.github.io/SAFEY_1/" target="_blank" class="demo-link">View Live Site →</a>
+                    </div>
                 </div>
-                <div class="demo-content">
-                    <h3>SAFEY Platform</h3>
-                    <p>Full-stack web application with user authentication, real-time data processing, and API integration. Demonstrates complex backend architecture and seamless user experience.</p>
-                    <a href="https://ag2027.github.io/SAFEY_1/" target="_blank" class="demo-link">View Live Site →</a>
-                </div>
-            </div>
 
-            <div class="demo-card animate-on-scroll">
-                <div class="demo-image">
-                    <img src="demo-musicraft.png" alt="Musicraft Therapy" onerror="this.parentElement.innerHTML='<span>Musicraft</span>'">
-                </div>
-                <div class="demo-content">
-                    <h3>Musicraft Therapy</h3>
-                    <p>Clean, accessible therapy services website with service descriptions and mobile-responsive design optimized for conversions. Focus on user experience and accessibility.</p>
-                    <a href="https://amrik-majumdar.github.io/musicraft-therapy/" target="_blank" class="demo-link">View Live Site →</a>
+                <div class="demo-card">
+                    <div class="demo-image">
+                        <img src="demo-musicraft.png" alt="Musicraft Therapy" onerror="this.parentElement.innerHTML='Musicraft'">
+                    </div>
+                    <div class="demo-content">
+                        <h3>Musicraft Therapy</h3>
+                        <p>Clean, accessible therapy services website with service descriptions and mobile-responsive design optimized for conversions. Focus on user experience and accessibility.</p>
+                        <a href="https://amrik-majumdar.github.io/musicraft-therapy/" target="_blank" class="demo-link">View Live Site →</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FAQ Section -->
     <section id="faq">
-        <h2 class="animate-on-scroll">Frequently Asked Questions</h2>
-        <p class="section-subtitle animate-on-scroll">Everything you need to know about working with WebNest</p>
-        <div class="faq-container">
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question">How long does it take to build a website?</div>
-                <div class="faq-answer">Most projects are completed within 2-4 weeks, depending on complexity and content availability. Simple sites can be ready in as little as 1-2 weeks, while more complex projects with custom features may take 4-6 weeks. Rush delivery is available for an additional fee.</div>
+        <div class="section-container-narrow">
+            <div class="section-header">
+                <div class="section-label">FAQ</div>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about working with WebNest</p>
             </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">How long does it take to build a website?</div>
+                    <div class="faq-answer">Most projects are completed within 2-4 weeks, depending on complexity and content availability. Simple sites can be ready in as little as 1-2 weeks, while more complex projects with custom features may take 4-6 weeks. Rush delivery is available for an additional fee.</div>
+                </div>
 
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question">What's included in the monthly maintenance plan?</div>
-                <div class="faq-answer">The $300/month plan includes unlimited content updates, design edits, security monitoring, performance optimization, and priority support. You can request changes anytime via email or phone, and I'll implement them quickly—usually within 24-48 hours for standard updates.</div>
-            </div>
+                <div class="faq-item">
+                    <div class="faq-question">What's included in the monthly maintenance plan?</div>
+                    <div class="faq-answer">The $300/month plan includes unlimited content updates, design edits, security monitoring, performance optimization, and priority support. You can request changes anytime via email or phone, and I'll implement them quickly—usually within 24-48 hours for standard updates.</div>
+                </div>
 
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question">Do I own the website after it's built?</div>
-                <div class="faq-answer">Yes! You own all the code and content. With the one-time build option, you receive full access to everything immediately. With the maintenance plan, you maintain ownership throughout, and can cancel anytime to take full control without any restrictions.</div>
-            </div>
+                <div class="faq-item">
+                    <div class="faq-question">Do I own the website after it's built?</div>
+                    <div class="faq-answer">Yes! You own all the code and content. With the one-time build option, you receive full access to everything immediately. With the maintenance plan, you maintain ownership throughout, and can cancel anytime to take full control without any restrictions.</div>
+                </div>
 
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question">Can you help with domain and hosting?</div>
-                <div class="faq-answer">Absolutely! I can guide you through purchasing a custom domain and setting up hosting. Domain costs are typically $15-30/year, and hosting ranges from $5-20/month depending on your needs. I'll help you choose the best options and handle all technical setup.</div>
-            </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can you help with domain and hosting?</div>
+                    <div class="faq-answer">Absolutely! I can guide you through purchasing a custom domain and setting up hosting. Domain costs are typically $15-30/year, and hosting ranges from $5-20/month depending on your needs. I'll help you choose the best options and handle all technical setup.</div>
+                </div>
 
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question">What if I need additional features later?</div>
-                <div class="faq-answer">Additional features and pages can be added anytime. If you're on the maintenance plan, small additions are often included. Larger features like e-commerce, booking systems, or custom integrations are quoted separately based on complexity.</div>
-            </div>
+                <div class="faq-item">
+                    <div class="faq-question">What if I need additional features later?</div>
+                    <div class="faq-answer">Additional features and pages can be added anytime. If you're on the maintenance plan, small additions are often included. Larger features like e-commerce, booking systems, or custom integrations are quoted separately based on complexity.</div>
+                </div>
 
-            <div class="faq-item animate-on-scroll">
-                <div class="faq-question">What happens if I want to cancel the maintenance plan?</div>
-                <div class="faq-answer">You can cancel anytime with 30 days notice. There are no long-term contracts or cancellation fees. You'll retain full ownership of your website and all the code, and I'll help ensure a smooth transition.</div>
-            </div>
-
-            <div class="faq-form animate-on-scroll">
-                <h3 style="margin-bottom: 1rem;">Have a Different Question?</h3>
-                <form id="faqForm">
-                    <div class="form-group">
-                        <label for="faqName">Your Name</label>
-                        <input type="text" id="faqName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="faqEmail">Your Email</label>
-                        <input type="email" id="faqEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="faqQuestion">Your Question</label>
-                        <textarea id="faqQuestion" required></textarea>
-                    </div>
-                    <button type="submit">Send Question</button>
-                </form>
+                <div class="faq-item">
+                    <div class="faq-question">What happens if I want to cancel the maintenance plan?</div>
+                    <div class="faq-answer">You can cancel anytime with 30 days notice. There are no long-term contracts or cancellation fees. You'll retain full ownership of your website and all the code, and I'll help ensure a smooth transition.</div>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact">
-        <h2 class="animate-on-scroll">Let's Build Something Great</h2>
-        <p class="section-subtitle animate-on-scroll">Request a free website audit and see how WebNest can help your business</p>
-        <div class="contact-form animate-on-scroll">
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Your Name *</label>
-                    <input type="text" id="name" required>
+        <div class="section-container-narrow">
+            <div class="section-header">
+                <div class="section-label">Get Started</div>
+                <h2 class="section-title">Let's Build Something Great</h2>
+                <p class="section-subtitle">Request a free website audit and see how WebNest can help your business</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tell Me About Your Project *</label>
+                            <textarea id="message" required placeholder="Describe your business, what kind of website you need, and any specific features you're interested in..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Request Free Audit</button>
+                    </form>
+                    <div class="contact-info">
+                        <p>Or email directly:</p>
+                        <a href="mailto:webnestam@gmail.com" class="contact-email">webnestam@gmail.com</a>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Your Email *</label>
-                    <input type="email" id="email" required>
+
+                <!-- Payment Section -->
+                <div class="payment-section">
+                    <div class="payment-header">
+                        <h3>Payment Options</h3>
+                        <p>For existing clients making payments</p>
+                    </div>
+                    <div class="payment-content">
+                        <div class="payment-qr">
+                            <img src="Zelle.jpg" alt="Zelle Payment QR Code" onerror="this.style.display='none'">
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-detail-item">
+                                <span class="payment-detail-label">Payment Method</span>
+                                <span class="payment-detail-value">Zelle</span>
+                            </div>
+                            <div class="payment-detail-item">
+                                <span class="payment-detail-label">Email</span>
+                                <span class="payment-detail-value">webnestam@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-note">
+                        Scan the QR code or use the email above to send payment via Zelle. New clients should start with a free consultation.
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="message">Tell Me About Your Project *</label>
-                    <textarea id="message" required placeholder="Describe your business, what kind of website you need, and any specific features you're interested in..."></textarea>
-                </div>
-                <button type="submit">Request Free Audit</button>
-            </form>
-            <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light);">
-                Or email directly: <a href="mailto:webnestam@gmail.com" style="color: var(--primary); font-weight: 600;">webnestam@gmail.com</a>
-            </p>
+            </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
+        <p style="font-weight: 700; font-size: 1.125rem; margin-bottom: 0.625rem;">WebNest</p>
         <p>&copy; 2025 WebNest. Professional website development by Amrik Majumdar.</p>
-        <p style="margin-top: 0.5rem; opacity: 0.8;">Northern Virginia | <a href="mailto:webnestam@gmail.com" style="color: white;">webnestam@gmail.com</a></p>
+        <p style="margin-top: 0.75rem;">Northern Virginia | <a href="mailto:webnestam@gmail.com">webnestam@gmail.com</a></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -1437,7 +1785,11 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const offsetTop = target.offsetTop - 85;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
                 }
             });
         });
@@ -1451,21 +1803,25 @@
             }
         });
 
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        const sections = document.querySelectorAll('section[id]');
+        const navLinksElements = document.querySelectorAll('.nav-link');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
                 }
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
+            navLinksElements.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
 
         document.getElementById('contactForm').addEventListener('submit', async (e) => {
@@ -1480,10 +1836,8 @@
             
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
-            submitBtn.style.opacity = '0.7';
             
             try {
-                // Send notification to you with correct variables
                 await emailjs.send('service_o0fvkmm', 'template_upzyfcy', {
                     email: 'webnestam@gmail.com',
                     from_name: name,
@@ -1491,113 +1845,42 @@
                     message: message
                 });
                 
-                // Send confirmation to customer with correct variables
                 await emailjs.send('service_o0fvkmm', 'template_h6gzqmt', {
                     email: email,
                     name: name,
                     message: message
                 });
                 
-                form.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                form.style.transition = 'opacity 0.4s ease';
                 form.style.opacity = '0';
-                form.style.transform = 'translateY(-20px)';
                 
                 setTimeout(() => {
                     const successMessage = document.createElement('div');
                     successMessage.style.cssText = `
                         text-align: center;
-                        padding: 3rem;
+                        padding: 3rem 2rem;
                         opacity: 0;
-                        transform: translateY(20px);
-                        transition: opacity 0.5s ease, transform 0.5s ease;
+                        transition: opacity 0.4s ease;
                     `;
                     successMessage.innerHTML = `
-                        <div style="font-size: 4rem; margin-bottom: 1rem;">✓</div>
-                        <h3 style="color: var(--success); font-size: 2rem; margin-bottom: 1rem;">Message Sent!</h3>
-                        <p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem;">Thank you for reaching out. I'll get back to you within 24 hours.</p>
-                        <button onclick="location.reload()" style="padding: 0.8rem 2rem; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: white; border: none; border-radius: 25px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Send Another Message</button>
+                        <div style="font-size: 3.5rem; margin-bottom: 1.25rem; color: var(--success);">✓</div>
+                        <h3 style="color: var(--text); font-size: 1.75rem; margin-bottom: 1rem; font-weight: 700;">Message Sent Successfully</h3>
+                        <p style="color: var(--text-light); font-size: 1.0625rem; margin-bottom: 2rem; line-height: 1.6;">Thank you for reaching out. I'll get back to you within 24 hours.</p>
+                        <button onclick="location.reload()" style="padding: 0.875rem 1.75rem; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1rem;">Send Another Message</button>
                     `;
                     
-                    form.parentElement.appendChild(successMessage);
+                    form.parentElement.insertBefore(successMessage, form);
                     form.style.display = 'none';
                     
                     setTimeout(() => {
                         successMessage.style.opacity = '1';
-                        successMessage.style.transform = 'translateY(0)';
                     }, 50);
-                }, 500);
+                }, 400);
             } catch (error) {
                 console.error('Email send failed:', error);
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Request Free Audit';
-                submitBtn.style.opacity = '1';
                 alert('Sorry, there was an error sending your message. Please email me directly at webnestam@gmail.com');
-            }
-        });
-
-        document.getElementById('faqForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const form = e.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            
-            const name = document.getElementById('faqName').value;
-            const email = document.getElementById('faqEmail').value;
-            const question = document.getElementById('faqQuestion').value;
-            
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.style.opacity = '0.7';
-            
-            try {
-                // Send notification to you with correct variables
-                await emailjs.send('service_o0fvkmm', 'template_upzyfcy', {
-                    email: 'webnestam@gmail.com',
-                    from_name: name,
-                    from_email: email,
-                    message: question
-                });
-                
-                // Send confirmation to customer with correct variables
-                await emailjs.send('service_o0fvkmm', 'template_h6gzqmt', {
-                    email: email,
-                    name: name,
-                    message: question
-                });
-                
-                form.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                form.style.opacity = '0';
-                form.style.transform = 'translateY(-20px)';
-                
-                setTimeout(() => {
-                    const successMessage = document.createElement('div');
-                    successMessage.style.cssText = `
-                        text-align: center;
-                        padding: 2rem;
-                        opacity: 0;
-                        transform: translateY(20px);
-                        transition: opacity 0.5s ease, transform 0.5s ease;
-                    `;
-                    successMessage.innerHTML = `
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">✓</div>
-                        <h4 style="color: var(--success); font-size: 1.5rem; margin-bottom: 0.5rem;">Question Sent!</h4>
-                        <p style="color: var(--text-light);">I'll respond to your question soon.</p>
-                    `;
-                    
-                    form.parentElement.appendChild(successMessage);
-                    form.style.display = 'none';
-                    
-                    setTimeout(() => {
-                        successMessage.style.opacity = '1';
-                        successMessage.style.transform = 'translateY(0)';
-                    }, 50);
-                }, 500);
-            } catch (error) {
-                console.error('Email send failed:', error);
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Question';
-                submitBtn.style.opacity = '1';
-                alert('Sorry, there was an error sending your question. Please email me directly at webnestam@gmail.com');
             }
         });
     </script>
