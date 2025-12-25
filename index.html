@@ -6,7 +6,7 @@
     <meta name="description" content="WebNest - Professional website development for small businesses in Northern Virginia. Modern, mobile-first websites that drive results.">
     <meta name="keywords" content="web development, small business websites, Northern Virginia, ReactJS, full stack development">
     <title>WebNest | Professional Website Development for Small Businesses</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="fanico logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:wght@600;700&display=swap" rel="stylesheet">
@@ -195,6 +195,22 @@
             max-width: 620px;
         }
 
+        .hero-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            opacity: 0.9;
+            flex-shrink: 0;
+        }
+
         .hero-meta {
             font-size: 0.875rem;
             font-weight: 600;
@@ -205,8 +221,8 @@
         }
 
         .hero h1 {
-            margin-bottom: 2rem;
             line-height: 1.1;
+            margin: 0;
         }
 
         .hero-subtitle {
@@ -1137,6 +1153,15 @@
                 width: 60%;
             }
 
+            .hero-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .hero-title-wrapper {
+                gap: 1rem;
+            }
+
             .stats-bar {
                 padding: 3rem 2rem;
             }
@@ -1184,6 +1209,15 @@
         @media (max-width: 480px) {
             .logo {
                 font-size: 1.5rem;
+            }
+
+            .hero-logo {
+                width: 42px;
+                height: 42px;
+            }
+
+            .hero-title-wrapper {
+                gap: 0.875rem;
             }
 
             .cta-group {
@@ -1244,7 +1278,10 @@
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-meta">Northern Virginia Web Development</div>
-                <h1>Professional Websites for Small Businesses</h1>
+                <div class="hero-title-wrapper">
+                    <img src="logo.png" alt="WebNest Logo" class="hero-logo">
+                    <h1>Professional Websites for Small Businesses</h1>
+                </div>
                 <p class="hero-subtitle">
                     Modern, mobile-first websites that help your business grow. Built with care, delivered with excellence.
                 </p>
