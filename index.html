@@ -196,17 +196,27 @@
         }
 
         .hero-title-row {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
             align-items: center;
-            gap: 2rem;
             margin-bottom: 2rem;
         }
 
+        .hero-logo-wrapper {
+            border-radius: 4px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--bg-light);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
         .hero-logo {
-            width: 120px;
-            height: 120px;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            flex-shrink: 0;
+            padding: 2rem;
+            background: white;
         }
 
         .hero-meta {
@@ -221,7 +231,6 @@
         .hero h1 {
             line-height: 1.1;
             margin: 0;
-            flex: 1;
         }
 
         .hero-subtitle {
@@ -1093,6 +1102,17 @@
                 order: -1;
             }
 
+            .hero-title-row {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-logo-wrapper {
+                order: -1;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
             .pricing-grid {
                 grid-template-columns: 1fr;
                 max-width: 560px;
@@ -1152,13 +1172,8 @@
                 width: 60%;
             }
 
-            .hero-logo {
-                width: 90px;
-                height: 90px;
-            }
-
             .hero-title-row {
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
             .stats-bar {
@@ -1211,12 +1226,11 @@
             }
 
             .hero-logo {
-                width: 70px;
-                height: 70px;
+                padding: 1.5rem;
             }
 
             .hero-title-row {
-                gap: 1.25rem;
+                gap: 1.5rem;
                 flex-wrap: wrap;
             }
 
@@ -1280,7 +1294,9 @@
                 <div class="hero-meta">Northern Virginia Web Development</div>
                 <div class="hero-title-row">
                     <h1>Professional Websites for Small Businesses</h1>
-                    <img src="logo.png" alt="WebNest Logo" class="hero-logo">
+                    <div class="hero-logo-wrapper">
+                        <img src="logo.png" alt="WebNest Logo" class="hero-logo">
+                    </div>
                 </div>
                 <p class="hero-subtitle">
                     Modern, mobile-first websites that help your business grow. Built with care, delivered with excellence.
